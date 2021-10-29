@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MCM interne lib</title>
+  <script src="svg.js/svg.min.js">  </script>
+</head>
+<body>
+  <a href="https://svgjs.dev/docs/3.0/" target="new" >bib</a> 
+  
+   <a href=" https://github.com/svgdotjs/svg.js/issues/954" target="new" >help</a> 
+ 
+ 
+ 
+   <a href="https://www.tutorialguruji.com/javascript/save-generated-svg-with-svg-js-as-svg-file/" target="new" >save as</a> 
+ <p id="demo">hi</p>
+ 
+ 
+   
+
+  <script >
+    var text ="javascript in id demo";
+    console.log ( "start")
+	
+var draw = SVG().addTo('body').size(1800, 1300);
+
+//var draw = SVG("tek").size(1800, 1300);
+var nulpuntx = 1250
+var nulpunty = 30
+
+
+var groenmodule = draw.rect(450, 750);
+groenmodule.attr({x: nulpuntx, y: nulpunty,  fill: '#fff', 'fill-opacity': null, stroke: '#000', 'stroke-width': 2})
+
+
+//groenmodule.attr('fill', #f06)
+//var circle1 = draw.circle(20)
+// circle1.attr({ cx: 100, cy: 150 }) //center vd cirkel is de referentie
+  
+
+  for (let i = 0; i < 8; i++) {
+  
+ var bovenstevijzen = draw.circle(30) 
+  bovenstevijzen.attr({ cx: nulpuntx + 55 +  (i*50 ), cy: nulpunty + 72}) //center vd cirkel is de referentie bovenste rij vijzen
+ bovenstevijzen.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1})
+ 
+   
+  var onderstevijzen = draw.circle(30) 
+  onderstevijzen.attr({ cx:  nulpuntx + 55 +  + (i*50 ), cy: nulpunty + 676}) //center vd cirkel is de referentie bovenste rij vijzen
+  onderstevijzen.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1})
+  
+  
+  
+  
+    var ondersteleds = draw.circle(30)  //io
+  ondersteleds.attr({ cx:  nulpuntx + 55 +  + (i*50 ), cy: nulpunty + 676}) //center vd cirkel is de referentie bovenste rij vijzen
+  ondersteleds.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1})
+  
+      var bovensteleds = draw.circle(30)  //io
+  bovensteleds.attr({ cx:  nulpuntx + 55 +  + (i*50 ), cy: nulpunty + 676}) //center vd cirkel is de referentie bovenste rij vijzen
+  bovensteleds.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1})
+  
+
+  
+}
+
+  for (let i = 0; i < 12; i++) {
+
+        var zijdelingseleds = draw.circle(20)  //12gaten mcm
+  zijdelingseleds.attr({ cx:  nulpuntx + 407 +    (i*0 ), cy: nulpunty + 190 + (i*35)}) //center vd cirkel is de referentie bovenste rij vijzen
+  zijdelingseleds.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1})
+  
+  }
+
+
+  
+  document.getElementById("demo").innerHTML = text;
+  
+  
+  
+  
+  //get svg element.
+var svg = document.getElementById("hi");
+
+//get svg source.
+var serializer = new XMLSerializer();
+var source = serializer.serializeToString(svg);
+
+//add name spaces.
+if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+    source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+}
+if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+    source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+}
+
+//add xml declaration
+source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+//convert svg source to URI data scheme.
+var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+
+//set url value to a element's href attribute.
+document.getElementById("hi").href = url;
+//you can download svg file by right click menu.
+
+  </script>
+  
+  
+  
+    
+  <hr>
+
+<svg width="4040" height="4000">
+   <circle cx="0" cy=" 50" r="30" stroke="green" stroke-width="2" fill="yellow" />   
+    <circle cx="100" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
+    
+       <circle cx="200" cy=" 50" r="30" stroke="green" stroke-width="2" fill="yellow" />   
+    <circle cx="300" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
+    
+       <circle cx="400" cy=" 50" r="30" stroke="green" stroke-width="2" fill="yellow" />   
+    <circle cx="500" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
+    
+    
+       <circle cx="600" cy=" 50" r="30" stroke="green" stroke-width="2" fill="yellow" />   
+    <circle cx="700" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
+
+
+
+   <circle cx="0" cy=" 250" r="30" stroke="green" stroke-width="2" fill="yellow" />   
+    <circle cx="100" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
+    
+       <circle cx="200" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />   
+    <circle cx="300" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
+    
+       <circle cx="400" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />   
+    <circle cx="500" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
+    
+    
+       <circle cx="600" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />   
+    <circle cx="700" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
+
+          
+          <polygon points="200,10 250,190 160,210" style="fill:lime;stroke:purple;stroke-width:1" />    
+              <text x="170" y="15" fill="red">I love SVG!</text>
+              
+              <rect x="170" y="215" width="300" height="20" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" />
+   
+
+</svg> 
+
+
+ 
+
+</body>
+</html>

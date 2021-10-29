@@ -22,6 +22,7 @@
 var paper = Snap("#Vincent");
 var nulpuntx = 020 // linksrechts
 var nulpunty = 85 // opneer
+var rotatie = 180 //0 is gewoon , 180 is grmod ondersteboven
 var aantaldipswitches = 8 // can (dmx)
 var canaddress = "10000111"  // bijvoorbeeld decimaal 7 is  binair 00000111
 
@@ -118,7 +119,7 @@ var nr_een_on = paper.text(0-25 + dipposx + nulpuntx, 18 + (diptussenruimte * 7)
 
 
 
-var nr_een = paper.text(395 + nulpuntx, 50 + nulpunty, "1");
+var nr_een = paper.text(395 + nulpuntx, 50 + nulpunty, "1").attr({ 'transform': 'rotate(55 )'}); 
 var nr_twee = paper.text(345 + nulpuntx, 50 + nulpunty, "2");
 var nr_drie = paper.text(295 + nulpuntx, 50 + nulpunty, "3");
 var nr_vier = paper.text(245 + nulpuntx, 50 + nulpunty, "4");
@@ -127,9 +128,8 @@ var nr_zes = paper.text(145 + nulpuntx, 50 + nulpunty, "6");
 var nr_zeven = paper.text(95 + nulpuntx, 50 + nulpunty, "7");
 var nr_acht = paper.text(45 + nulpuntx, 50 + nulpunty, "8");
 group1tot8 = paper.group(nr_een, nr_twee, nr_drie, nr_vier, nr_vijf, nr_zes, nr_zeven, nr_acht);
-group1tot8.attr({
-'font-size': 25
-});
+group1tot8.attr({'font-size': 25});
+
 var nr_negen = paper.text(055 + nulpuntx, 719 + nulpunty, "9");
 var nr_tien = paper.text(087 + nulpuntx, 719 + nulpunty, "10");
 var nr_elf = paper.text(092 + 45 + nulpuntx, 719 + nulpunty, "11");

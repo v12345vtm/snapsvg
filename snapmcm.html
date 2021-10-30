@@ -15,243 +15,326 @@
 
 <a href="https://github.com/v12345vtm/snapsvg" target="new">backup</a>
 
+   <br> can-address binair : 
+<input type="text"   id="gui_dipswitch"  size="40"  placeholder="dip switch adress vb : 11001110  and hit f5"     value="10000111" > </input>
+  <br>
+  textrotation 0 of 180: 
+<input type="text"   id="gui_rotation"  size="40"  placeholder="0 of 180  and hit f5"  value="0" ></input>
+     
+
+	  <br>
+  type ;  mcm of io: 
+<input type="text"   id="gui_type"  size="40"  placeholder="0 of 180  and hit f5"  value="mcm" ></input>
+ 
 <hr>
-<svg id="Vincent" width="600" height="950" style="color:blue; border-style: dotted;"></svg>
+<svg id="VincentPro" width="1200" height="1450" style="color:blue; border-style: dotted;"></svg>
 <hr>
 <script>
-var paper = Snap("#Vincent");
-var nulpuntx = 020 // linksrechts
-var nulpunty = 85 // opneer
-var rotatie = 180 //0 is gewoon , 180 is grmod ondersteboven
+ // alert(document.getElementById('gui_dipswitch').value);
+  
+var paper = Snap("#VincentPro");
+var nulpuntx = 200 // linksrechts
+var nulpunty = 500 // opneer
+
+var schaalfactor =2//schaalfactor grote dipswitchen
+var rotatie =  0 //0 is gewoon , 180 is grmod ondersteboven
 var aantaldipswitches = 8 // can (dmx)
 var canaddress = "10000111"  // bijvoorbeeld decimaal 7 is  binair 00000111
-
-//for(let i = 0; i < aantaldipswitches; i++) {
-//canaddress.charAt(i)
-//console.log(canaddress.charAt(i))
-//}
-//paper.circle(0, 0, 30);
-//paper.circle(150, 60, 20);
-
-//var w = paper.line(400, 30, 20, 20).attr({ stroke:"black", strokeWidth: 1 }); 
+ var groenemoduletype   = "io"  // bijvoorbeeld dmcm io 
 
 
+var text_componentlabel = "-3A2"
+var text_groenefische = "XS70"
+var text_db9 = "XS71"
+var text_prog_fw = "XS72"
+var text_can1 = "XS73"
+var text_can2 = "XS74"
 
 
 
+// To create pattern,// just specify dimensions in pattern method:
+var gearceerd = paper.path("M15-5-10,18 M15,0,0").attr({ fill: "none", stroke: "#000000", strokeWidth: 3 }).pattern(0, 0, 10, 10)
+// c = paper.rect(0,90, 30, 30);
+// c.attr({ fill: gearceerd});
 
 
 
-var groenebehuizing = paper.rect(0 + nulpuntx, 0 + nulpunty, 450, 750)
-groenebehuizing.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+//GUI to javascript
+canaddress = document.getElementById('gui_dipswitch').value;
+rotatie = document.getElementById('gui_rotation').value;
+groenemoduletype = document.getElementById('gui_type').value;
 
+ if (groenemoduletype == "io") {aantaldipswitches = 5}
 
-
-var groenecanvas = paper.rect(10+ nulpuntx, 144 + nulpunty, 430, 462)
-groenecanvas.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-
-
-
-var canbus1 = paper.rect(15+ nulpuntx, 233 + nulpunty, 135, 160)
-canbus1.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-
-
-var canbus2 = paper.rect(15+ nulpuntx, 233+160+10 + nulpunty, 135, 160)
-canbus2.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-
-
-
-var groenefischeboven = paper.rect(10 + nulpuntx, 0 + nulpunty, 430, 127)
-groenefischeboven.attr({
-fill: '#fff',
-stroke: '#000',
-'stroke-width': 1
-})
-
-
-
-var groenefischeonder = paper.rect(10 + nulpuntx, 623 + nulpunty, 430, 127)
-groenefischeonder.attr({
-fill: '#fff',
-stroke: '#000',
-'stroke-width': 1
-})
-
-
-
-
-
-
-
-
-var dipbreedte = 20
-var diphoogte = 20
-var diptussenruimte = 25.4
-var dipposx = 175
-var dipposy = 317
-
-
+var groenebehuizing = paper.rect(0 + nulpuntx, 0 + nulpunty, 450, 750).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+var groenecanvas = paper.rect(10+ nulpuntx, 144 + nulpunty, 430, 462).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+var canbus1 = paper.rect(15+ nulpuntx, 233 + nulpunty, 135, 160).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+var canbus2 = paper.rect(15+ nulpuntx, 233+160+10 + nulpunty, 135, 160).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+var groenefischeboven = paper.rect(10 + nulpuntx, 0 + nulpunty, 430, 127).attr({fill: '#fff',stroke: '#000','stroke-width': 1})
+var groenefischeonder = paper.rect(10 + nulpuntx, 623 + nulpunty, 430, 127).attr({fill: '#fff',stroke: '#000','stroke-width': 1})
 
  
-//var dip1on = paper.rect(-00+ nulpuntx, dipposy+ (diptussenruimte*7) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-//var dip1off = paper.rect(-00+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*7)+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+
+bb =  20 //insprong weerhaak links*
+cc = 80 //plughoogte*
+dd = cc+30//weerhaak hoe diep is de uitspariing naar onder toe
+ee =  85 //breedte weerhaak
+ff =  ee+bb  
+ var canconnector1 = paper.polyline([
+0,0
+,0,cc
+,bb,cc   
+,bb,dd  
+,ee,dd   
+,ee,cc
+,ff,cc
+,ff,0
+,0,0
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+canconnector1.transform('translate('+ (30   + nulpuntx ) + ' ,'+ (260   + nulpunty ) + ' )') 
+
+ var canconnector2 = paper.polyline([
+0,0
+,0,cc
+,bb,cc   
+,bb,dd  
+,ee,dd   
+,ee,cc
+,ff,cc
+,ff,0
+,0,0
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+canconnector2.transform('translate('+ (30   + nulpuntx ) + ' ,'+ (430   + nulpunty ) + ' )') 
 
 
-//var dip2on = paper.rect(-30+ nulpuntx, dipposy+ (diptussenruimte*6) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-//var dip2off = paper.rect(-30+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*6)+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-
-
-var nr_een_on = paper.text(0-25 + dipposx + nulpuntx, 18 + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({ 'font-size': 18 , 'transform': 'rotate( 270 )'}); 
-//var nr_een_dip = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * 7) + dipposy + nulpunty ,"1").attr({ 'transform': 'rotate( 270 )'});
-//var nr_twee_dip = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * 6) + dipposy + nulpunty, "2").attr({ 'transform': 'rotate( 270 )'});
-//var nr_drie_dip = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * 5) + dipposy + nulpunty, "3").attr({ 'transform': 'rotate( 270 )'});
-//var nr_vier_dip = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * 4) + dipposy + nulpunty, "4").attr({ 'transform': 'rotate( 270 )'});
-//var nr_vijf_dip = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * 3) + dipposy + nulpunty, "5").attr({ 'transform': 'rotate( 270 )'});
-//var nr_zes_dip = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * 2) + dipposy + nulpunty, "6").attr({ 'transform': 'rotate( 270 )'});
-//var nr_zeven_dip = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * 1) + dipposy + nulpunty, "7").attr({ 'transform': 'rotate( 270 )'});
-//var nr_acht_dip = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * 0) + dipposy + nulpunty, "8").attr({ 'transform': 'rotate( 270 )'});
-//group_dip1tot8 = paper.group( nr_een_dip, nr_twee_dip, nr_drie_dip, nr_vier_dip, nr_vijf_dip, nr_zes_dip, nr_zeven_dip, nr_acht_dip);
-//group_dip1tot8.attr({ 'font-size': 25 });
-
-
-//nr_acht_dip.attr({'font-size': 25 , 'transform': 'rotate( 270 )'});
-//nr_zeven_dip.attr({'font-size': 25 , 'transform': 'rotate( 270 )'});
-
-
-
-var nr_een = paper.text(395 + nulpuntx, 50 + nulpunty, "1").attr({ 'transform': 'rotate(55 )'}); 
-var nr_twee = paper.text(345 + nulpuntx, 50 + nulpunty, "2");
-var nr_drie = paper.text(295 + nulpuntx, 50 + nulpunty, "3");
-var nr_vier = paper.text(245 + nulpuntx, 50 + nulpunty, "4");
-var nr_vijf = paper.text(195 + nulpuntx, 50 + nulpunty, "5");
-var nr_zes = paper.text(145 + nulpuntx, 50 + nulpunty, "6");
-var nr_zeven = paper.text(95 + nulpuntx, 50 + nulpunty, "7");
-var nr_acht = paper.text(45 + nulpuntx, 50 + nulpunty, "8");
+if (true) {
+var nr_een = paper.text(395+7 + nulpuntx, 43 + nulpunty, "1").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_twee = paper.text(345+7  + nulpuntx, 43 + nulpunty, "2").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_drie = paper.text(295+7  + nulpuntx, 43 + nulpunty, "3").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_vier = paper.text(245+7  + nulpuntx, 43 + nulpunty, "4").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_vijf = paper.text(195+7  + nulpuntx, 43 + nulpunty, "5").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_zes = paper.text(145+7  + nulpuntx, 43 + nulpunty, "6").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_zeven = paper.text(95+7  + nulpuntx, 43 + nulpunty, "7").attr({ 'text-anchor':"middle" ,'transform': 'rotate('+ rotatie+' )'}); 
+var nr_acht = paper.text(45+5  + nulpuntx, 43 + nulpunty, "8").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
 group1tot8 = paper.group(nr_een, nr_twee, nr_drie, nr_vier, nr_vijf, nr_zes, nr_zeven, nr_acht);
-group1tot8.attr({'font-size': 25});
+group1tot8.attr({'font-size': 25, 'font-family':'arial'  });
 
-var nr_negen = paper.text(055 + nulpuntx, 719 + nulpunty, "9");
-var nr_tien = paper.text(087 + nulpuntx, 719 + nulpunty, "10");
-var nr_elf = paper.text(092 + 45 + nulpuntx, 719 + nulpunty, "11");
-var nr_twaalf = paper.text(092 + 095 + nulpuntx, 719 + nulpunty, "12");
-var nr_dertien = paper.text(092 + 145 + nulpuntx, 719 + nulpunty, "13");
-var nr_veertien = paper.text(092 + 195 + nulpuntx, 719 + nulpunty, "14");
-var nr_vijftien = paper.text(092 + 245 + nulpuntx, 719 + nulpunty, "15");
-var nr_zestien = paper.text(387 + nulpuntx, 719 + nulpunty, "16");
+var nr_negen = paper.text(055+5 + nulpuntx, 719 + nulpunty, "9").attr({ 'text-anchor':"middle" ,'transform': 'rotate('+ rotatie+' )'}); 
+var nr_tien = paper.text(085+15 + nulpuntx, 719 + nulpunty, "10").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_elf = paper.text(105 + 45 + nulpuntx, 719 + nulpunty, "11").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_twaalf = paper.text(105 + 095 + nulpuntx, 719 + nulpunty, "12").attr({ 'text-anchor':"middle" ,'transform': 'rotate('+ rotatie+' )'}); 
+var nr_dertien = paper.text(105 + 145 + nulpuntx, 719 + nulpunty, "13").attr({ 'text-anchor':"middle" ,'transform': 'rotate('+ rotatie+' )'}); 
+var nr_veertien = paper.text(105 + 195 + nulpuntx, 719 + nulpunty, "14").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_vijftien = paper.text(105 + 245 + nulpuntx, 719 + nulpunty, "15").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_zestien = paper.text(385+15 + nulpuntx, 719 + nulpunty, "16").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
 group9tot16 = paper.group(nr_negen, nr_tien, nr_elf, nr_twaalf, nr_dertien, nr_veertien, nr_vijftien, nr_zestien);
-group9tot16.attr({ 'font-size': 25 });
+group9tot16.attr({ 'font-size': 25, 'font-family':'arial'   });
+} 
 
 
-
-
-
-
-
-//var circ1 = paper.circle(200, 100, 50);
-//var circ2 = paper.circle(300, 150, 100);
-
-//group1 = paper.group(circ2, circ1);
-//group1.attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1})
+//bovenstevijzen
 for(let i = 0; i < 8; i++) {
 xpos = i * 50 + 50 //50 tussen de vijzen , en 55 vanaf de boord
-ypos = (i * 1) + 72 // 72 vanaf de bovenkant
+ypos = (i * 0) + 72 // 72 vanaf de bovenkant
 diam = 30
 var bovenstevijzen = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
-bovenstevijzen.attr({
-fill: '#fff',
-stroke: '#000',
-'stroke-width': 1
-})
-
-
-
+bovenstevijzen.attr({fill: '#fff',stroke: '#000','stroke-width': 1})
 var streepjevijs1 = paper.line(xpos + nulpuntx - (diam/2 / 1.5) , ypos + nulpunty + (diam /2 / 1.5) , xpos+20 + nulpuntx - (diam/2 / 1.5) , ypos-20 + nulpunty + (diam /2 / 1.5) ).attr({ stroke:"black", strokeWidth: 1 }); 
-
-//var c = paper.line(xpos + nulpuntx - (diam/2 / 1.5) , ypos + nulpunty + (diam /2 / 1.5) , 20, 20).attr({ stroke:"black", strokeWidth: 1 }); 
-
-
-
-
-
 }
+
+//bovenstevijzen
 for(let i = 0; i < 8; i++) {
 xpos = i * 50 + 50
-ypos = (i * 1) + 676
+ypos = (i * 0) + 676
 diam = 30
 var onderstevijzen = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
-onderstevijzen.attr({
-fill: '#fff',
-stroke: '#000',
-'stroke-width': 1
-}) 
-
+onderstevijzen.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
 var streepjevijs2 = paper.line(xpos + nulpuntx - (diam/2 / 1.5) , ypos + nulpunty + (diam /2 / 1.5) , xpos+20 + nulpuntx - (diam/2 / 1.5) , ypos-20 + nulpunty + (diam /2 / 1.5) ).attr({ stroke:"black", strokeWidth: 1 }); 
-
 }
 
 
+if (groenemoduletype =="mcm") {
+//indicatielampjes
+for(let i = 0; i < 12; i++) {
+tussenafstand = 35
+xpos = (0 * 1) + 410
+ypos = (i * tussenafstand) + 180
+diam = 25
+var indicatielampjes = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
+indicatielampjes.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+}
+
+}
+
+if (groenemoduletype =="io") {
+//indicatielampjes bovenaan
+for(let i = 0; i < 8; i++) {
+tussenafstand = 50
+xpos = (i * tussenafstand) + 50 //+offsett
+ypos = (i * 0) + 175
+diam = 25
+var indicatielampjes = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
+indicatielampjes.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+}
+//indicatielampjes onderaan
+for(let i = 0; i < 6; i++) {
+tussenafstand = 50
+xpos = (i * tussenafstand) + 50 //+offsett
+ypos = (i * 0) + 581
+diam = 25
+var indicatielampjes = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
+indicatielampjes.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+}
+}
 
 
-// create textbox
-const input = document.createElement("textarea");
-input.setAttribute("id", "saveSVG");
-input.setAttribute("rows", "50");
-input.setAttribute("cols", "59");
+if (groenemoduletype =="mcm") {
+//db9
+bbb = 190 //langste zijde
+ccc =  65 // breedte
+ddd =  25 // hoek ,hoe kleiner getal hoe rechthoekiger
+ var db9_chassis = paper.polyline([
+0,0
+,0,bbb
+,ccc,bbb-ddd 
+,ccc,ddd
+,0,0
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+db9_chassis.transform('translate('+ (278   + nulpuntx ) + ' ,'+ (320   + nulpunty ) + ' )') 
+
+var db9xpos = 295
+var db9ypos =   360
+var db9diam = 16
+var db9tussenpinnen = 30
+var db9pin1 = paper.circle(db9xpos+0 + nulpuntx, db9ypos+(db9tussenpinnen*0 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin2 = paper.circle(db9xpos+0 + nulpuntx, db9ypos+(db9tussenpinnen*1 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin3 = paper.circle(db9xpos+0 + nulpuntx, db9ypos +(db9tussenpinnen*2 )+ nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin4 = paper.circle(db9xpos+0 + nulpuntx, db9ypos+(db9tussenpinnen*3 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin5 = paper.circle(db9xpos+0 + nulpuntx, db9ypos+(db9tussenpinnen*4 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ 
+  var db9pin6 = paper.circle(db9xpos+db9tussenpinnen + nulpuntx, db9ypos+db9tussenpinnen/2+(db9tussenpinnen*0 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin7 = paper.circle(db9xpos+db9tussenpinnen + nulpuntx, db9ypos+db9tussenpinnen/2+(db9tussenpinnen*1 )+ nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin8 = paper.circle(db9xpos+db9tussenpinnen + nulpuntx, db9ypos+db9tussenpinnen/2+(db9tussenpinnen*2 )+ nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin9 = paper.circle(db9xpos+db9tussenpinnen + nulpuntx, db9ypos+db9tussenpinnen/2+(db9tussenpinnen*3 ) + nulpunty, db9diam / 2).attr({fill:'none',stroke: '#000','stroke-width': 1}) 
+ 
+ var gatjeschroef_1_db9 = paper.circle(308 + nulpuntx , 291 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000','stroke-width': 1})
+var gatjeschroef_2_db9 = paper.circle(308 + nulpuntx , 540 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000','stroke-width': 1})
+
+var label_db9 = paper.text(340+ nulpuntx   ,  425 + nulpunty, text_db9).attr({ 'font-size': 25, 'font-family':'arial'  , 'transform': 'rotate('+ (rotatie - 90) + ' )'}); 
+var label_db9pin1 = paper.text(db9xpos- 8+ nulpuntx   ,  db9ypos-8 + nulpunty, "1").attr({ 'font-size': 25, 'font-family':'arial'  , 'transform': 'rotate('+ (0 - 90) + ' )'}); 
+
+ 
+//hexagon zeskant
+//https://www.quora.com/How-can-you-find-the-coordinates-in-a-hexagon
+maat_vd_moer= 30  //metrische schroefdraad moer maat 
+ax = maat_vd_moer*2
+ay = maat_vd_moer 
+bx = maat_vd_moer*1.5 
+by =   maat_vd_moer-(0.86602540378*maat_vd_moer)    //maat_vd_moer-35
+cx = maat_vd_moer/2
+cy =  maat_vd_moer-(0.86602540378*maat_vd_moer)    //maat_vd_moer-35
+dx = 0
+dy =  maat_vd_moer 
+ex =  maat_vd_moer/2
+ey = (0.86602540378*maat_vd_moer)+maat_vd_moer // 35+maat_vd_moer
+fx = maat_vd_moer*1.5
+fy =  (0.86602540378*maat_vd_moer)+  maat_vd_moer    //35+maat_vd_moer
+offsetnaarnulpuntx = -maat_vd_moer
+offsetnaarnulpunty = -maat_vd_moer
+
+ var moerboven = paper.polyline([
+ax,ay
+,bx,by
+,cx,cy
+,dx,dy
+,ex,ey
+,fx,fy
+,ax,ay
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+moerboven.transform('translate('+ (308+ offsetnaarnulpuntx   + nulpuntx ) + ' ,'+ (291+offsetnaarnulpunty   + nulpunty ) + ' )') 
 
 
-
+ var moeronder = paper.polyline([
+ax,ay
+,bx,by
+,cx,cy
+,dx,dy
+,ex,ey
+,fx,fy
+,ax,ay
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+moeronder.transform('translate('+ (308+ offsetnaarnulpuntx   + nulpuntx ) + ' ,'+ (540+offsetnaarnulpunty   + nulpunty ) + ' )') 
+} 
+ 
+ if (groenemoduletype =="mcm") {
+//3.5mm programmerheader
 var programeerheader_ = paper.rect(237 + nulpuntx -(130/2), 196 + nulpunty - (90/2), 130, 90) 
 var programeerheadera = paper.circle(237 + nulpuntx , 196 + nulpunty, 70/2);
 var programeerheaderb = paper.circle(237 + nulpuntx , 196 + nulpunty, 50/2);
 var programeerheaderc = paper.circle(237 + nulpuntx , 196 + nulpunty, 30/2);
+var programeerheader_hoek1 = paper.rect(237 + nulpuntx -(130/2), 196 + nulpunty + (90/2)-15, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1})  
+var programeerheader_hoek2 = paper.rect(237 + nulpuntx -(130/2), 196 + nulpunty + (90/2)-90, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var programeerheader_hoek3 = paper.rect(237  + nulpuntx -(130/2)+100, 196 + nulpunty - (90/2), 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var programeerheader_hoek4 = paper.rect(237 + nulpuntx -(130/2)+100, 196 + nulpunty - (90/2)+90-15, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+programeerheader = paper.group(programeerheader_ , programeerheader_hoek1 , programeerheader_hoek2 , programeerheader_hoek3 ,programeerheader_hoek4 , programeerheadera , programeerheaderb , programeerheaderc );
+programeerheader.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var label_prog_fw = paper.text(237+80+ nulpuntx, 205 + nulpunty, text_prog_fw).attr({ 'font-size': 25 , 'font-family':'arial' , 'text-anchor':"middle",'transform': 'rotate('+ (rotatie-90)+' )'}); 
+var gatjeonderdipswitch = paper.circle(196 + nulpuntx , 557 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000', 'text-anchor':"middle", 'stroke-width': 1})
+}
 
-programeerheader = paper.group(programeerheader_ , programeerheadera , programeerheaderb , programeerheaderc );
-programeerheader.attr({
-fill: '#fff',
-stroke: '#000',
-'stroke-width': 1
-}) 
+ if (groenemoduletype =="io") {
+//3.5mm programmerheader
+var programeerheader_ = paper.rect(237 + nulpuntx -(130/2), 296 + nulpunty - (90/2), 130, 90) 
+var programeerheadera = paper.circle(237 + nulpuntx , 296 + nulpunty, 70/2);
+var programeerheaderb = paper.circle(237 + nulpuntx , 296 + nulpunty, 50/2);
+var programeerheaderc = paper.circle(237 + nulpuntx , 296 + nulpunty, 30/2);
+var programeerheader_hoek1 = paper.rect(237 + nulpuntx -(130/2), 296 + nulpunty + (90/2)-15, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1})  
+var programeerheader_hoek2 = paper.rect(237 + nulpuntx -(130/2), 296 + nulpunty + (90/2)-90, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var programeerheader_hoek3 = paper.rect(237  + nulpuntx -(130/2)+100, 296 + nulpunty - (90/2), 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var programeerheader_hoek4 = paper.rect(237 + nulpuntx -(130/2)+100, 296 + nulpunty - (90/2)+90-15, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+programeerheader = paper.group(programeerheader_ , programeerheader_hoek1 , programeerheader_hoek2 , programeerheader_hoek3 ,programeerheader_hoek4 , programeerheadera , programeerheaderb , programeerheaderc );
+programeerheader.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var label_prog_fw = paper.text(237+80+ nulpuntx, 305 + nulpunty, text_prog_fw).attr({ 'font-size': 25 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ (rotatie-90)+' )'}); 
+}
 
 
-var gatjea = paper.circle(196 + nulpuntx , 557 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000','stroke-width': 1})
-var gatjeschroef_1_db9 = paper.circle(308 + nulpuntx , 291 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000','stroke-width': 1})
-var gatjeschroef_2_db9 = paper.circle(308 + nulpuntx , 540 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000','stroke-width': 1})
+//labels texten
+var label_componentlabel = paper.text(450/2+ nulpuntx - 0  , -20 + nulpunty, text_componentlabel).attr({ 'font-size': 50 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+var label_groenefische = paper.text(450/2+ nulpuntx -0  , 115 + nulpunty, text_groenefische).attr({ 'font-size': 25, 'font-family':'arial'  ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+var label_can1 = paper.text(80+ nulpuntx , 320 + nulpunty, text_can1).attr({ 'font-size': 25, 'font-family':'arial'  ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+var label_can2 = paper.text(80+ nulpuntx, 490 + nulpunty, text_can2).attr({ 'font-size': 25 , 'font-family':'arial' , 'text-anchor':"middle",'transform': 'rotate('+ rotatie+' )'}); 
+var label_groenefische2 = paper.text(450/2+ nulpuntx - 0 , 655 + nulpunty, text_groenefische).attr({ 'font-size': 25,'text-anchor':"middle", 'font-family':'arial'  , 'transform': 'rotate('+ rotatie+' )'}); 
+
+//var label_address = paper.text(255 + nulpuntx , 590 + nulpunty, "0x2B21").attr({'font-size': 25 , 'font-family':'arial' ,    'transform': 'rotate('+ rotatie+' )'}); 
+
+ var label_test = paper.text(nulpuntx+0 , nulpunty+0, "ergrege");
+ label_test.attr({'font-size': 40 , 'text-anchor':"middle",  'text-align': 'center' , 'transform': 'rotate( 0  )'});
 
 
-var label_componentlabel = paper.text(00+ nulpuntx , 20 + nulpunty, "-2A11");
-var label_groenefische = paper.text(00+ nulpuntx , 150 + nulpunty, "XS30");
-var label_can1 = paper.text(00+ nulpuntx , 250 + nulpunty, "XS33");
-var label_can2 = paper.text(00+ nulpuntx , 350 + nulpunty, "XS34");
-var label_address = paper.text(255 + nulpuntx , 590 + nulpunty, "dmx010");
 
-var label_test = paper.text(540 , 380, "848");
-
-
-label_test.attr({'font-size': 25 , 'transform': 'rotate( 90 ,540 , 380)'});
-
-
-// To create pattern,
-// just specify dimensions in pattern method:
-var gearceerd = paper.path("M15-5-10,18 M15,0,0").attr({ fill: "none", stroke: "#000000", strokeWidth: 3 }).pattern(0, 0, 10, 10)
-//c = paper.rect(0,90, 30, 30);
-//c.attr({ fill: gearceerd});
-
+var q = label_test.clone();
+ q.attr({'font-size': 60 , 'text-anchor':"middle",  'text-align': 'center' , 'transform': 'rotate( 0  )'});
+q.transform('translate('+ (308+ 0   + nulpuntx ) + ' ,'+ (40+0   + nulpunty ) + ' )') 
 
 
 
 
 
 //DIPSWITCHES GENERERN
+var dipbreedte = 20
+var diphoogte = 20
+var diptussenruimte = 25.4
+var dipposx = 175
+var dipposy = 317
+var nr_een_on = paper.text(0-25 + dipposx + nulpuntx, 18 + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({'font-family':'arial', 'font-size': 18 , 'transform': 'rotate( 270 )'}); 
+
 //https://poopcode.com/create-dynamic-variable-names-inside-a-javascript-loop/
 for (var i = 0; i <= aantaldipswitches-1; i++) {
-//creer variabele namen met een forloop en vul direct de dipswitchstand in
- 
+//creer variabele namen met een forloop en vul direct de dipswitchstand in 
    this["vdip"+ (aantaldipswitches -i) + "on"]   = paper.rect(dipposx+ nulpuntx, dipposy+ (diptussenruimte*(7 -i)) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
    this["vdip"+ (aantaldipswitches -i) + "off"]  = paper.rect(dipposx+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*(7 -i))+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
 //het getal die rechts de dipadress aanduid
- this["vdipgetal"+ (aantaldipswitches -i) ]  = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({  'font-size': 25 ,'transform': 'rotate( 270 )'});
-
-
+ this["vdipgetal"+ (aantaldipswitches -i) ]  = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({ 'font-family':'arial', 'font-size': 25 ,'transform': 'rotate( 270 )'});
 
 console.log("loop" + i )
 console.log("canadreslengt-i= " + (canaddress.length - i) ) 
@@ -271,18 +354,49 @@ if (canaddress.charAt(canaddress.length-1  - i) == "0") {
 }
  
  
-//vdip1on.attr({ fill: gearceerd});
-//vdip3on.attr({ fill: gearceerd});
+ 
 
-//var dip1on = paper.rect(-30+ nulpuntx, dipposy+ (diptussenruimte*7) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-//var dip1off = paper.rect(-30+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*7)+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+  //GROTE DIPSWITCHES GENERERN
+//var schaalfactor =2 //schaalfactor grote dipswitchen
+  dipbreedte = 20*schaalfactor
+  diphoogte = 20*schaalfactor
+  diptussenruimte = 25.4*schaalfactor
+  dipposx = 180
+  dipposy =  -nulpunty 
 
+
+var nr_een_on = paper.text(0-25-(2*schaalfactor) + dipposx + nulpuntx , (18*schaalfactor) + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({ 'font-size': (18*schaalfactor) ,'font-family':'arial','text-anchor':"middle", 'transform': 'rotate( 270 )'}); 
+
+//https://poopcode.com/create-dynamic-variable-names-inside-a-javascript-loop/
+for (var i = 0; i <= aantaldipswitches-1; i++) {
+//creer variabele namen met een forloop en vul direct de dipswitchstand in 
+   this["vdip"+ (aantaldipswitches -i) + "on"]   = paper.rect(dipposx+ nulpuntx, dipposy+ (diptussenruimte*(7 -i)) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+   this["vdip"+ (aantaldipswitches -i) + "off"]  = paper.rect(dipposx+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*(7 -i))+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+//het getal die rechts de dipadress aanduid
+ this["vdipgetal"+ (aantaldipswitches -i) ]  = paper.text((50*schaalfactor)+ dipposx + nulpuntx, (18*schaalfactor) + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({ 'font-family':'arial' ,  'font-size': (25*schaalfactor) ,'transform': 'rotate( 270 )'});
+
+//hier arceren we tijdens de loop de zwarte dipsettings
+if (canaddress.charAt(canaddress.length -1 - i) == "1") {
+ this["vdip"+ (aantaldipswitches -i) + "on"] .attr({ fill: gearceerd});
+} 
+
+if (canaddress.charAt(canaddress.length-1  - i) == "0") {
+ this["vdip"+ (aantaldipswitches -i) + "off"] .attr({ fill: gearceerd});
+} 
+
+}
 
 
 //dip1on.attr({ fill: gearceerd});
 
 
 paper.drag() ; //met muis kan jet verzetten in de browser
+
+// create textbox met svgcode
+const input = document.createElement("textarea");
+input.setAttribute("id", "saveSVG");
+input.setAttribute("rows", "50");
+input.setAttribute("cols", "59");
 input.innerHTML = paper.toString();
 // insert textbox
 document.body.appendChild(input);
@@ -290,26 +404,12 @@ document.body.appendChild(input);
 
 //console.log(paper.toString())
 </script>
-<svg width="4040" height="4000">
-<circle cx="0" cy=" 50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="100" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="200" cy=" 50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="300" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="400" cy=" 50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="500" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="600" cy=" 50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="700" cy="50" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="0" cy=" 250" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="100" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="200" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="300" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="400" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="500" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="600" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<circle cx="700" cy="250" r="30" stroke="green" stroke-width="2" fill="yellow" />
-<polygon points="200,10 250,190 160,210" style="fill:lime;stroke:purple;stroke-width:1" />
-<text x="170" y="15" fill="red">I love SVG!</text>
-<rect x="170" y="215" width="300" height="20" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" /> </svg>
+
+
+ 
+
+
+ 
 </body>
 
 </html> 

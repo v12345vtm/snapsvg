@@ -39,24 +39,48 @@
 var paper = Snap("#VincentPro");
 var grotedip = Snap("#VincentPro");
 
-var nulpuntx = 100 // linksrechts   ons dom elementis 500with
-var nulpunty = 70 // opneer
+var nulpuntx = 120 // linksrechts   ons dom elementis 500with
+var nulpunty = 160 // opneer
  document.getElementById('VincentPro').setAttribute("width", 450 +0);
   document.getElementById('VincentPro').setAttribute("height", 450 + 0);
- 
- 
-
-
 
 // To create pattern,// just specify dimensions in pattern method:
-var gearceerd = paper.path("M15-5-10,18 M15,0,0").attr({ fill: "none", stroke: "#000000", strokeWidth: 3 }).pattern(0, 0, 10, 10)
+//var gearceerd = paper.path("M15-5-10,18 M15,0,0").attr({ fill: "none", stroke: "#000000", strokeWidth: 3 }).pattern(0, 0, 10, 10)
 // c = paper.rect(0,90, 30, 30);
 // c.attr({ fill: gearceerd});
-var groenecanvas = paper.rect(0+ nulpuntx, 0 + nulpunty, 100, 100).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+//var gatref = paper.circle(100 + nulpuntx, 0 + nulpunty, 3).attr({ fill: '#000', stroke: '#0f0', 'stroke-width': 1 })
 
  
-paper.attr({ 'transform': 'rotate( '+ modulerotatie  +',0,0 )'});
  
+//var lijn  = paper.line(0+ nulpuntx, 0 + nulpunty, 100 + nulpuntx, 0 + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+//var gat = paper.circle(100 + nulpuntx, 0 + nulpunty, 10);
+//lijn.attr({ 'transform': 'rotate( '+ (15*1)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+//gat.attr({ 'transform': 'rotate( '+ (15*1)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+
+
+//console.log(lijn);
+ 
+ 
+
+
+aantal = 11
+hoek = 360/aantal
+straal = 90
+
+//bovenstevijzen
+for(let i = 0; i < aantal; i++) {
+//var lijn  = paper.line(0+ nulpuntx, 0 + nulpunty, straal + nulpuntx, 0 + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+var gat = paper.circle(straal + nulpuntx, 0 + nulpunty, 10);
+//lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+ //  this["vdip"+ (i) + "on"]  
+}
+
+
+  var gatref = paper.circle(straal + nulpuntx, 0 + nulpunty, 3).attr({ fill: '#000', stroke: '#0f0', 'stroke-width': 3 })
+ var center = paper.circle(0 + nulpuntx, 0 + nulpunty, 3).attr({ fill: '#000', stroke: '#0f0', 'stroke-width': 3 })
+
+
  
 
 

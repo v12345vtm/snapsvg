@@ -62,19 +62,67 @@ var nulpunty = 160 // opneer
  
  
 
-
-aantal = 11
+//buitenste gaatjesronde
+aantal = 24
 hoek = 360/aantal
-straal = 90
-
-//bovenstevijzen
+straal = 77
+gatdiam = 15
 for(let i = 0; i < aantal; i++) {
 //var lijn  = paper.line(0+ nulpuntx, 0 + nulpunty, straal + nulpuntx, 0 + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
-var gat = paper.circle(straal + nulpuntx, 0 + nulpunty, 10);
+var gat = paper.circle(straal + nulpuntx, 0 + nulpunty, gatdiam/2);
 //lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
 gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
  //  this["vdip"+ (i) + "on"]  
 }
+
+
+
+//middenste gaatjesronde
+aantal = 18
+hoek = 360/aantal
+straal = 57
+gatdiam = 15
+for(let i = 0; i < aantal; i++) {
+//var lijn  = paper.line(0+ nulpuntx, 0 + nulpunty, straal + nulpuntx, 0 + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+var gat = paper.circle(straal + nulpuntx, 0 + nulpunty, gatdiam/2);
+//lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+ //  this["vdip"+ (i) + "on"]  
+}
+
+
+//middenste gaatjesronde
+aantal = 12
+hoek = 360/aantal
+straal = 37
+gatdiam = 15
+for(let i = 0; i < aantal; i++) {
+//var lijn  = paper.line(0+ nulpuntx, 0 + nulpunty, straal + nulpuntx, 0 + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+var gat = paper.circle(straal + nulpuntx, 0 + nulpunty, gatdiam/2);
+//lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+ //  this["vdip"+ (i) + "on"]  
+}
+
+
+//kleinste gaatjesronde
+aantal = 5
+hoek = 360/aantal
+straal = 17
+gatdiam = 15
+for(let i = 0; i < aantal; i++) {
+//var lijn  = paper.line(0+ nulpuntx, 0 + nulpunty, straal + nulpuntx, 0 + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+var gat = paper.circle(straal + nulpuntx, 0 + nulpunty, gatdiam/2);
+//lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ nulpuntx  +','+ nulpunty  +' )'});
+ //  this["vdip"+ (i) + "on"]  
+}
+
+
+
+
+
+
 
 
   var gatref = paper.circle(straal + nulpuntx, 0 + nulpunty, 3).attr({ fill: '#000', stroke: '#0f0', 'stroke-width': 3 })

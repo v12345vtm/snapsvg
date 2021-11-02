@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>MCM interne lib</title>
+<script src="Snap.svg-0.5.1/dist/snap.svg-min.js">
+</script>
+</head>
+
+<body> <a href="https://www.i-programmer.info/programming/javascript/6537-getting-started-with-snapsvg.html" target="new">help</a>
+
+
+
+<a href="http://snapsvg.io/docs/" target="new">doc</a>
+
+<a href="https://github.com/v12345vtm/snapsvg" target="new">backup</a>
+
+   <br> can-address binair : 
+<input type="text"   id="gui_dipswitch"  size="40"  placeholder="dip switch adress vb : 11001110  and hit f5"     value="10000111" > </input>
+  <br>
+  textrotation 0 of 180: 
+<input type="text"   id="gui_rotation"  size="40"  placeholder="0 of 180  and hit f5"  value="0" ></input>
+     
+
+	  <br>
+  type ;  mcm of io: 
+<input type="text"   id="gui_type"  size="40"  placeholder="0 of 180  and hit f5"  value="mcm" ></input>
+ 
+<hr>
+<svg id="VincentPro" width="123" height="1800" style="color:blue; border-style: dotted;"></svg>
+<hr>
+<script>
+  console.log(document.getElementById('VincentPro'));
+ // document.getElementById('VincentPro').setAttribute("width", 450); //450is modulebreedte
+ 
+ 
+ 
+ 
+var paper = Snap("#VincentPro");
+var grotedip = Snap("#VincentPro");
+
+var nulpuntx = 100 // linksrechts   ons dom elementis 500with
+var nulpunty = 70 // opneer
+ document.getElementById('VincentPro').setAttribute("width", 450 +0);
+  document.getElementById('VincentPro').setAttribute("height", 450 + 0);
+ 
+ 
+
+
+
+// To create pattern,// just specify dimensions in pattern method:
+var gearceerd = paper.path("M15-5-10,18 M15,0,0").attr({ fill: "none", stroke: "#000000", strokeWidth: 3 }).pattern(0, 0, 10, 10)
+// c = paper.rect(0,90, 30, 30);
+// c.attr({ fill: gearceerd});
+var groenecanvas = paper.rect(0+ nulpuntx, 0 + nulpunty, 100, 100).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+
+ 
+paper.attr({ 'transform': 'rotate( '+ modulerotatie  +',0,0 )'});
+ 
+ 
+
+
+paper.drag() ; //met muis kan jet verzetten in de browser
+
+// create textbox met svgcode
+const input = document.createElement("textarea");
+input.setAttribute("id", "saveSVG");
+input.setAttribute("rows", "50");
+input.setAttribute("cols", "59");
+input.innerHTML = paper.toString();
+// insert textbox
+document.body.appendChild(input);
+
+
+
+
+
+//console.log(paper.toString())
+</script>
+
+
+ 
+
+
+ 
+</body>
+
+</html> 
+
+
+
+
+ 

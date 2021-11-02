@@ -27,23 +27,33 @@
 <input type="text"   id="gui_type"  size="40"  placeholder="0 of 180  and hit f5"  value="mcm" ></input>
  
 <hr>
-<svg id="VincentPro" width="1200" height="1450" style="color:blue; border-style: dotted;"></svg>
+<svg id="VincentPro" width="123" height="1800" style="color:blue; border-style: dotted;"></svg>
 <hr>
 <script>
- // alert(document.getElementById('gui_dipswitch').value);
-  
+  console.log(document.getElementById('VincentPro'));
+ // document.getElementById('VincentPro').setAttribute("width", 450); //450is modulebreedte
+ 
+ 
+ 
+ 
 var paper = Snap("#VincentPro");
-var nulpuntx = 200 // linksrechts
-var nulpunty = 500 // opneer
+var grotedip = Snap("#VincentPro");
 
+var nulpuntx = 50 // linksrechts   ons dom elementis 500with
+var nulpunty = 500 // opneer
+ document.getElementById('VincentPro').setAttribute("width", 450 + nulpuntx+nulpuntx);
+ 
 var schaalfactor =2//schaalfactor grote dipswitchen
-var rotatie =  0 //0 is gewoon , 180 is grmod ondersteboven
+
+var modulerotatie = 0
+var rotatie =  modulerotatie //textrotatie 0 is gewoon , 180 is grmod ondersteboven of de module volgen
+
 var aantaldipswitches = 8 // can (dmx)
 var canaddress = "10000111"  // bijvoorbeeld decimaal 7 is  binair 00000111
  var groenemoduletype   = "io"  // bijvoorbeeld dmcm io 
 
 
-var text_componentlabel = "-3A2"
+var text_componentlabel = "-3A9"
 var text_groenefische = "XS70"
 var text_db9 = "XS71"
 var text_prog_fw = "XS72"
@@ -60,9 +70,9 @@ var gearceerd = paper.path("M15-5-10,18 M15,0,0").attr({ fill: "none", stroke: "
 
 
 //GUI to javascript
-canaddress = document.getElementById('gui_dipswitch').value;
-rotatie = document.getElementById('gui_rotation').value;
-groenemoduletype = document.getElementById('gui_type').value;
+//canaddress = document.getElementById('gui_dipswitch').value;
+//rotatie = document.getElementById('gui_rotation').value;
+//groenemoduletype = document.getElementById('gui_type').value;
 
  if (groenemoduletype == "io") {aantaldipswitches = 5}
 
@@ -299,7 +309,7 @@ var label_prog_fw = paper.text(237+80+ nulpuntx, 305 + nulpunty, text_prog_fw).a
 
 
 //labels texten
-var label_componentlabel = paper.text(450/2+ nulpuntx - 0  , -20 + nulpunty, text_componentlabel).attr({ 'font-size': 50 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+
 var label_groenefische = paper.text(450/2+ nulpuntx -0  , 115 + nulpunty, text_groenefische).attr({ 'font-size': 25, 'font-family':'arial'  ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
 var label_can1 = paper.text(80+ nulpuntx , 320 + nulpunty, text_can1).attr({ 'font-size': 25, 'font-family':'arial'  ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
 var label_can2 = paper.text(80+ nulpuntx, 490 + nulpunty, text_can2).attr({ 'font-size': 25 , 'font-family':'arial' , 'text-anchor':"middle",'transform': 'rotate('+ rotatie+' )'}); 
@@ -307,14 +317,13 @@ var label_groenefische2 = paper.text(450/2+ nulpuntx - 0 , 655 + nulpunty, text_
 
 //var label_address = paper.text(255 + nulpuntx , 590 + nulpunty, "0x2B21").attr({'font-size': 25 , 'font-family':'arial' ,    'transform': 'rotate('+ rotatie+' )'}); 
 
- var label_test = paper.text(nulpuntx+0 , nulpunty+0, "ergrege");
- label_test.attr({'font-size': 40 , 'text-anchor':"middle",  'text-align': 'center' , 'transform': 'rotate( 0  )'});
+// var label_test = paper.text(nulpuntx+0 , nulpunty+0, "ergrege");
+ //label_test.attr({'font-size': 40 , 'text-anchor':"middle",  'text-align': 'center' , 'transform': 'rotate( 0  )'});
+//var q = label_test.clone();
+// q.attr({'font-size': 60 , 'text-anchor':"middle",  'text-align': 'center' , 'transform': 'rotate( 0  )'});
+//q.transform('translate('+ (308+ 0   + nulpuntx ) + ' ,'+ (40+0   + nulpunty ) + ' )') 
 
 
-
-var q = label_test.clone();
- q.attr({'font-size': 60 , 'text-anchor':"middle",  'text-align': 'center' , 'transform': 'rotate( 0  )'});
-q.transform('translate('+ (308+ 0   + nulpuntx ) + ' ,'+ (40+0   + nulpunty ) + ' )') 
 
 
 
@@ -354,40 +363,83 @@ if (canaddress.charAt(canaddress.length-1  - i) == "0") {
 }
  
  
- 
+ if (modulerotatie == 0 ) {
+  //GROTE DIPSWITCHES GENERERN bovenaan 0gr dus
+//var schaalfactor =2 //schaalfactor grote dipswitchen
 
-  //GROTE DIPSWITCHES GENERERN
+var label_componentlabel = paper.text(450/2+ nulpuntx - 0  , -20 + nulpunty, text_componentlabel).attr({ 'font-size': 50 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+
+  dipbreedte = 20*schaalfactor
+  diphoogte = 20*schaalfactor
+  diptussenruimte = 25.4*schaalfactor
+  
+  dipposx = 180  
+  dipposy =   -nulpunty +10
+var nr_een_on = grotedip.text(0-25-(2*schaalfactor) + dipposx + nulpuntx , (18*schaalfactor) + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({ 'font-size': (18*schaalfactor) ,'font-family':'arial','text-anchor':"middle", 'transform': 'rotate( 270 )'}); 
+for (var i = 0; i <= aantaldipswitches-1; i++) {
+ this["vdip"+ (aantaldipswitches -i) + "on"]   = grotedip.rect(dipposx+ nulpuntx, dipposy+ (diptussenruimte*(7 -i)) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+   this["vdip"+ (aantaldipswitches -i) + "off"]  = grotedip.rect(dipposx+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*(7 -i))+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+ this["vdipgetal"+ (aantaldipswitches -i) ]  = grotedip.text((50*schaalfactor)+ dipposx + nulpuntx, (18*schaalfactor) + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({ 'font-family':'arial' ,  'font-size': (25*schaalfactor) ,'transform': 'rotate( 270 )'});
+if (canaddress.charAt(canaddress.length -1 - i) == "1") {
+ this["vdip"+ (aantaldipswitches -i) + "on"] .attr({ fill: gearceerd});
+} 
+if (canaddress.charAt(canaddress.length-1  - i) == "0") {
+ this["vdip"+ (aantaldipswitches -i) + "off"] .attr({ fill: gearceerd});
+} 
+}
+}
+
+
+ if (modulerotatie == 180  ) {
+  //GROTE DIPSWITCHES GENERERN onderaan 180 dus
 //var schaalfactor =2 //schaalfactor grote dipswitchen
   dipbreedte = 20*schaalfactor
   diphoogte = 20*schaalfactor
   diptussenruimte = 25.4*schaalfactor
-  dipposx = 180
-  dipposy =  -nulpunty 
-
-
-var nr_een_on = paper.text(0-25-(2*schaalfactor) + dipposx + nulpuntx , (18*schaalfactor) + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({ 'font-size': (18*schaalfactor) ,'font-family':'arial','text-anchor':"middle", 'transform': 'rotate( 270 )'}); 
-
-//https://poopcode.com/create-dynamic-variable-names-inside-a-javascript-loop/
+  
+  dipposx = 180  
+  dipposy =   -nulpunty +1200
+  
+  
+   if (groenemoduletype =="mcm") {
+    dipposy =   -nulpunty +1200+150
+   }
+  
+  
+var nr_een_on = grotedip.text(0-25-(2*schaalfactor) + dipposx + nulpuntx , (18*schaalfactor) + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({ 'font-size': (18*schaalfactor) ,'font-family':'arial','text-anchor':"middle", 'transform': 'rotate( 270 )'}); 
 for (var i = 0; i <= aantaldipswitches-1; i++) {
-//creer variabele namen met een forloop en vul direct de dipswitchstand in 
-   this["vdip"+ (aantaldipswitches -i) + "on"]   = paper.rect(dipposx+ nulpuntx, dipposy+ (diptussenruimte*(7 -i)) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-   this["vdip"+ (aantaldipswitches -i) + "off"]  = paper.rect(dipposx+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*(7 -i))+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-//het getal die rechts de dipadress aanduid
- this["vdipgetal"+ (aantaldipswitches -i) ]  = paper.text((50*schaalfactor)+ dipposx + nulpuntx, (18*schaalfactor) + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({ 'font-family':'arial' ,  'font-size': (25*schaalfactor) ,'transform': 'rotate( 270 )'});
-
-//hier arceren we tijdens de loop de zwarte dipsettings
+ this["vdip"+ (aantaldipswitches -i) + "on"]   = grotedip.rect(dipposx+ nulpuntx, dipposy+ (diptussenruimte*(7 -i)) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+   this["vdip"+ (aantaldipswitches -i) + "off"]  = grotedip.rect(dipposx+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*(7 -i))+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+ this["vdipgetal"+ (aantaldipswitches -i) ]  = grotedip.text((50*schaalfactor)+ dipposx + nulpuntx, (18*schaalfactor) + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({ 'font-family':'arial' ,  'font-size': (25*schaalfactor) ,'transform': 'rotate( 270 )'});
 if (canaddress.charAt(canaddress.length -1 - i) == "1") {
  this["vdip"+ (aantaldipswitches -i) + "on"] .attr({ fill: gearceerd});
 } 
-
 if (canaddress.charAt(canaddress.length-1  - i) == "0") {
  this["vdip"+ (aantaldipswitches -i) + "off"] .attr({ fill: gearceerd});
 } 
+}
+
+var label_componentlabel = paper.text(450/2+ nulpuntx - 0  , -20+840 + nulpunty, text_componentlabel).attr({ 'font-size': 50 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+
+//var kloon_label_componentlabel = label_componentlabel.clone();
+//kloon_label_componentlabel.transform('translate('+ (  0    ) + ' ,'+ ( 840 ) + ' )')  ; //verzet tov pos originele
 
 }
 
 
 //dip1on.attr({ fill: gearceerd});
+// modulerotatie = 180
+
+
+ //grote dipswitsch verschuiven 
+ //grotedip.transform('translate(50 ,20 )') 
+//grotedip.transform('translate('+ (308+ 0   + nulpuntx ) + ' ,'+ (40+0   + nulpunty ) + ' )') 
+ 
+//tekeing roteren 
+//grotedip.attr({ 'transform': 'rotate( '+ (modulerotatie +15)  +' ,0,0 )'});
+paper.attr({ 'transform': 'rotate( '+ modulerotatie  +',0,0 )'});
+ 
+ 
 
 
 paper.drag() ; //met muis kan jet verzetten in de browser
@@ -400,6 +452,9 @@ input.setAttribute("cols", "59");
 input.innerHTML = paper.toString();
 // insert textbox
 document.body.appendChild(input);
+
+
+
 
 
 //console.log(paper.toString())

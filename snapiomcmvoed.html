@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>MCM interne lib</title>
+<script src="Snap.svg-0.5.1/dist/snap.svg-min.js">
+</script>
+</head>
+
+<body> <a href="https://www.i-programmer.info/programming/javascript/6537-getting-started-with-snapsvg.html" target="new">help</a>
+
+
+
+<a href="http://snapsvg.io/docs/" target="new">doc</a>
+
+<a href="https://github.com/v12345vtm/snapsvg" target="new">backup</a>
+
+   <br> can-address binair : 
+<input type="text"   id="gui_dipswitch"  size="40"  placeholder="dip switch adress vb : 11001110  and hit f5"     value="10000111" > </input>
+  <br>
+  textrotation 0 of 180: 
+<input type="text"   id="gui_rotation"  size="40"  placeholder="0 of 180  and hit f5"  value="0" ></input>
+     
+
+	  <br>
+  type ;  mcm of io of voed: 
+<input type="text"   id="gui_type"  size="40"  placeholder="0 of 180  and hit f5"  value="mcm" ></input>
+ 
+<hr>
+<svg id="VincentPro" width="123" height="1800" style="color:blue; border-style: dotted;"></svg>
+<hr>
+<script>
+  console.log(document.getElementById('VincentPro'));
+ // document.getElementById('VincentPro').setAttribute("width", 450); //450is modulebreedte
+ 
+ 
+ 
+ 
+var paper = Snap("#VincentPro");
+var grotedip = Snap("#VincentPro");
+
+var nulpuntx = 50 // linksrechts   ons dom elementis 500with
+var nulpunty = 500 // opneer
+ document.getElementById('VincentPro').setAttribute("width", 450 + nulpuntx+nulpuntx);
+ 
+var schaalfactor =2//schaalfactor grote dipswitchen
+
+var modulerotatie = 0
+var rotatie =  modulerotatie //textrotatie 0 is gewoon , 180 is grmod ondersteboven of de module volgen
+
+var aantaldipswitches = 8 // can (dmx)
+var canaddress = "10000111"  // bijvoorbeeld decimaal 7 is  binair 00000111
+ var groenemoduletype   = "mcm"  // bijvoorbeeld mcm io voed 
+
+
+var text_componentlabel = "-3A99"
+var text_groenefische = "XS70"
+var text_db9 = "XS71"
+var text_prog_fw = "XS72"
+var text_can1 = "XS73"
+var text_can2 = "XS74"
+
+
+
+// To create pattern,// just specify dimensions in pattern method:
+var gearceerd = paper.path("M15-5-10,18 M15,0,0").attr({ fill: "none", stroke: "#000000", strokeWidth: 3 }).pattern(0, 0, 10, 10)
+// c = paper.rect(0,90, 30, 30);
+// c.attr({ fill: gearceerd});
+
+
+
+//GUI to javascript
+//canaddress = document.getElementById('gui_dipswitch').value;
+//rotatie = document.getElementById('gui_rotation').value;
+//groenemoduletype = document.getElementById('gui_type').value;
+
+ if (groenemoduletype == "io") {aantaldipswitches = 5}
+
+var groenebehuizing = paper.rect(0 + nulpuntx, 0 + nulpunty, 450, 750).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+var groenecanvas = paper.rect(10+ nulpuntx, 144 + nulpunty, 430, 462).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+
+ if (groenemoduletype =="io" || groenemoduletype =="mcm"){
+ //kadertjs canbus conenctoren
+var canbus1 = paper.rect(15+ nulpuntx, 233 + nulpunty, 135, 160).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+var canbus2 = paper.rect(15+ nulpuntx, 233+160+10 + nulpunty, 135, 160).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+}
+
+
+var groenefischeboven = paper.rect(10 + nulpuntx, 0 + nulpunty, 430, 127).attr({fill: '#fff',stroke: '#000','stroke-width': 1})
+var groenefischeonder = paper.rect(10 + nulpuntx, 623 + nulpunty, 430, 127).attr({fill: '#fff',stroke: '#000','stroke-width': 1})
+
+ 
+ 
+ if (groenemoduletype =="io" || groenemoduletype =="mcm"){
+ // canbus rj10 omtrek
+bb =  20 //insprong weerhaak links*
+cc = 80 //plughoogte*
+dd = cc+30//weerhaak hoe diep is de uitspariing naar onder toe
+ee =  85 //breedte weerhaak
+ff =  ee+bb  
+ var canconnector1 = paper.polyline([
+0,0
+,0,cc
+,bb,cc   
+,bb,dd  
+,ee,dd   
+,ee,cc
+,ff,cc
+,ff,0
+,0,0
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+canconnector1.transform('translate('+ (30   + nulpuntx ) + ' ,'+ (260   + nulpunty ) + ' )') 
+
+ var canconnector2 = paper.polyline([
+0,0
+,0,cc
+,bb,cc   
+,bb,dd  
+,ee,dd   
+,ee,cc
+,ff,cc
+,ff,0
+,0,0
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+canconnector2.transform('translate('+ (30   + nulpuntx ) + ' ,'+ (430   + nulpunty ) + ' )') 
+
+}
+
+if (true) {
+var nr_een = paper.text(395+7 + nulpuntx, 43 + nulpunty, "1").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_twee = paper.text(345+7  + nulpuntx, 43 + nulpunty, "2").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_drie = paper.text(295+7  + nulpuntx, 43 + nulpunty, "3").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_vier = paper.text(245+7  + nulpuntx, 43 + nulpunty, "4").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_vijf = paper.text(195+7  + nulpuntx, 43 + nulpunty, "5").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_zes = paper.text(145+7  + nulpuntx, 43 + nulpunty, "6").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_zeven = paper.text(95+7  + nulpuntx, 43 + nulpunty, "7").attr({ 'text-anchor':"middle" ,'transform': 'rotate('+ rotatie+' )'}); 
+var nr_acht = paper.text(45+5  + nulpuntx, 43 + nulpunty, "8").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+group1tot8 = paper.group(nr_een, nr_twee, nr_drie, nr_vier, nr_vijf, nr_zes, nr_zeven, nr_acht);
+group1tot8.attr({'font-size': 25, 'font-family':'arial'  });
+
+var nr_negen = paper.text(055+5 + nulpuntx, 719 + nulpunty, "9").attr({ 'text-anchor':"middle" ,'transform': 'rotate('+ rotatie+' )'}); 
+var nr_tien = paper.text(085+15 + nulpuntx, 719 + nulpunty, "10").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_elf = paper.text(105 + 45 + nulpuntx, 719 + nulpunty, "11").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_twaalf = paper.text(105 + 095 + nulpuntx, 719 + nulpunty, "12").attr({ 'text-anchor':"middle" ,'transform': 'rotate('+ rotatie+' )'}); 
+var nr_dertien = paper.text(105 + 145 + nulpuntx, 719 + nulpunty, "13").attr({ 'text-anchor':"middle" ,'transform': 'rotate('+ rotatie+' )'}); 
+var nr_veertien = paper.text(105 + 195 + nulpuntx, 719 + nulpunty, "14").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_vijftien = paper.text(105 + 245 + nulpuntx, 719 + nulpunty, "15").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+var nr_zestien = paper.text(385+15 + nulpuntx, 719 + nulpunty, "16").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
+group9tot16 = paper.group(nr_negen, nr_tien, nr_elf, nr_twaalf, nr_dertien, nr_veertien, nr_vijftien, nr_zestien);
+group9tot16.attr({ 'font-size': 25, 'font-family':'arial'   });
+} 
+
+
+//bovenstevijzen
+for(let i = 0; i < 8; i++) {
+xpos = i * 50 + 50 //50 tussen de vijzen , en 55 vanaf de boord
+ypos = (i * 0) + 72 // 72 vanaf de bovenkant
+diam = 30
+var bovenstevijzen = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
+bovenstevijzen.attr({fill: '#fff',stroke: '#000','stroke-width': 1})
+var streepjevijs1 = paper.line(xpos + nulpuntx - (diam/2 / 1.5) , ypos + nulpunty + (diam /2 / 1.5) , xpos+20 + nulpuntx - (diam/2 / 1.5) , ypos-20 + nulpunty + (diam /2 / 1.5) ).attr({ stroke:"black", strokeWidth: 1 }); 
+}
+
+//bovenstevijzen
+for(let i = 0; i < 8; i++) {
+xpos = i * 50 + 50
+ypos = (i * 0) + 676
+diam = 30
+var onderstevijzen = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
+onderstevijzen.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var streepjevijs2 = paper.line(xpos + nulpuntx - (diam/2 / 1.5) , ypos + nulpunty + (diam /2 / 1.5) , xpos+20 + nulpuntx - (diam/2 / 1.5) , ypos-20 + nulpunty + (diam /2 / 1.5) ).attr({ stroke:"black", strokeWidth: 1 }); 
+}
+
+
+if (groenemoduletype =="mcm") {
+//indicatielampjes
+for(let i = 0; i < 12; i++) {
+tussenafstand = 35
+xpos = (0 * 1) + 410
+ypos = (i * tussenafstand) + 180
+diam = 25
+var indicatielampjes = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
+indicatielampjes.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+}
+
+}
+
+if (groenemoduletype =="io") {
+//indicatielampjes bovenaan
+for(let i = 0; i < 8; i++) {
+tussenafstand = 50
+xpos = (i * tussenafstand) + 50 //+offsett
+ypos = (i * 0) + 175
+diam = 25
+var indicatielampjes = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
+indicatielampjes.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+}
+//indicatielampjes onderaan
+for(let i = 0; i < 6; i++) {
+tussenafstand = 50
+xpos = (i * tussenafstand) + 50 //+offsett
+ypos = (i * 0) + 581
+diam = 25
+var indicatielampjes = paper.circle(xpos + nulpuntx, ypos + nulpunty, diam / 2)
+indicatielampjes.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+}
+}
+
+
+if (groenemoduletype =="mcm") {
+//db9
+bbb = 190 //langste zijde
+ccc =  65 // breedte
+ddd =  25 // hoek ,hoe kleiner getal hoe rechthoekiger
+ var db9_chassis = paper.polyline([
+0,0
+,0,bbb
+,ccc,bbb-ddd 
+,ccc,ddd
+,0,0
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+db9_chassis.transform('translate('+ (278   + nulpuntx ) + ' ,'+ (320   + nulpunty ) + ' )') 
+
+var db9xpos = 295
+var db9ypos =   360
+var db9diam = 16
+var db9tussenpinnen = 30
+var db9pin1 = paper.circle(db9xpos+0 + nulpuntx, db9ypos+(db9tussenpinnen*0 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin2 = paper.circle(db9xpos+0 + nulpuntx, db9ypos+(db9tussenpinnen*1 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin3 = paper.circle(db9xpos+0 + nulpuntx, db9ypos +(db9tussenpinnen*2 )+ nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin4 = paper.circle(db9xpos+0 + nulpuntx, db9ypos+(db9tussenpinnen*3 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin5 = paper.circle(db9xpos+0 + nulpuntx, db9ypos+(db9tussenpinnen*4 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ 
+  var db9pin6 = paper.circle(db9xpos+db9tussenpinnen + nulpuntx, db9ypos+db9tussenpinnen/2+(db9tussenpinnen*0 ) + nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin7 = paper.circle(db9xpos+db9tussenpinnen + nulpuntx, db9ypos+db9tussenpinnen/2+(db9tussenpinnen*1 )+ nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin8 = paper.circle(db9xpos+db9tussenpinnen + nulpuntx, db9ypos+db9tussenpinnen/2+(db9tussenpinnen*2 )+ nulpunty, db9diam / 2).attr({fill: 'none',stroke: '#000','stroke-width': 1}) 
+ var db9pin9 = paper.circle(db9xpos+db9tussenpinnen + nulpuntx, db9ypos+db9tussenpinnen/2+(db9tussenpinnen*3 ) + nulpunty, db9diam / 2).attr({fill:'none',stroke: '#000','stroke-width': 1}) 
+ 
+ var gatjeschroef_1_db9 = paper.circle(308 + nulpuntx , 291 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000','stroke-width': 1})
+var gatjeschroef_2_db9 = paper.circle(308 + nulpuntx , 540 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000','stroke-width': 1})
+
+var label_db9 = paper.text(340+ nulpuntx   ,  425 + nulpunty, text_db9).attr({ 'font-size': 25, 'font-family':'arial'  , 'transform': 'rotate('+ (rotatie - 90) + ' )'}); 
+var label_db9pin1 = paper.text(db9xpos- 8+ nulpuntx   ,  db9ypos-8 + nulpunty, "1").attr({ 'font-size': 25, 'font-family':'arial'  , 'transform': 'rotate('+ (0 - 90) + ' )'}); 
+
+ 
+//hexagon zeskant
+//https://www.quora.com/How-can-you-find-the-coordinates-in-a-hexagon
+maat_vd_moer= 30  //metrische schroefdraad moer maat 
+ax = maat_vd_moer*2
+ay = maat_vd_moer 
+bx = maat_vd_moer*1.5 
+by =   maat_vd_moer-(0.86602540378*maat_vd_moer)    //maat_vd_moer-35
+cx = maat_vd_moer/2
+cy =  maat_vd_moer-(0.86602540378*maat_vd_moer)    //maat_vd_moer-35
+dx = 0
+dy =  maat_vd_moer 
+ex =  maat_vd_moer/2
+ey = (0.86602540378*maat_vd_moer)+maat_vd_moer // 35+maat_vd_moer
+fx = maat_vd_moer*1.5
+fy =  (0.86602540378*maat_vd_moer)+  maat_vd_moer    //35+maat_vd_moer
+offsetnaarnulpuntx = -maat_vd_moer
+offsetnaarnulpunty = -maat_vd_moer
+
+ var moerboven = paper.polyline([
+ax,ay
+,bx,by
+,cx,cy
+,dx,dy
+,ex,ey
+,fx,fy
+,ax,ay
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+moerboven.transform('translate('+ (308+ offsetnaarnulpuntx   + nulpuntx ) + ' ,'+ (291+offsetnaarnulpunty   + nulpunty ) + ' )') 
+
+
+ var moeronder = paper.polyline([
+ax,ay
+,bx,by
+,cx,cy
+,dx,dy
+,ex,ey
+,fx,fy
+,ax,ay
+ ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
+moeronder.transform('translate('+ (308+ offsetnaarnulpuntx   + nulpuntx ) + ' ,'+ (540+offsetnaarnulpunty   + nulpunty ) + ' )') 
+} 
+ 
+ if (groenemoduletype =="mcm") {
+//3.5mm programmerheader
+var programeerheader_ = paper.rect(237 + nulpuntx -(130/2), 196 + nulpunty - (90/2), 130, 90) 
+var programeerheadera = paper.circle(237 + nulpuntx , 196 + nulpunty, 70/2);
+var programeerheaderb = paper.circle(237 + nulpuntx , 196 + nulpunty, 50/2);
+var programeerheaderc = paper.circle(237 + nulpuntx , 196 + nulpunty, 30/2);
+var programeerheader_hoek1 = paper.rect(237 + nulpuntx -(130/2), 196 + nulpunty + (90/2)-15, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1})  
+var programeerheader_hoek2 = paper.rect(237 + nulpuntx -(130/2), 196 + nulpunty + (90/2)-90, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var programeerheader_hoek3 = paper.rect(237  + nulpuntx -(130/2)+100, 196 + nulpunty - (90/2), 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var programeerheader_hoek4 = paper.rect(237 + nulpuntx -(130/2)+100, 196 + nulpunty - (90/2)+90-15, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+programeerheader = paper.group(programeerheader_ , programeerheader_hoek1 , programeerheader_hoek2 , programeerheader_hoek3 ,programeerheader_hoek4 , programeerheadera , programeerheaderb , programeerheaderc );
+programeerheader.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var label_prog_fw = paper.text(237+80+ nulpuntx, 205 + nulpunty, text_prog_fw).attr({ 'font-size': 25 , 'font-family':'arial' , 'text-anchor':"middle",'transform': 'rotate('+ (rotatie-90)+' )'}); 
+var gatjeonderdipswitch = paper.circle(196 + nulpuntx , 557 + nulpunty, 30/2).attr({ fill: '#fff',stroke: '#000', 'text-anchor':"middle", 'stroke-width': 1})
+}
+
+ if (groenemoduletype =="io") {
+//3.5mm programmerheader
+var programeerheader_ = paper.rect(237 + nulpuntx -(130/2), 296 + nulpunty - (90/2), 130, 90) 
+var programeerheadera = paper.circle(237 + nulpuntx , 296 + nulpunty, 70/2);
+var programeerheaderb = paper.circle(237 + nulpuntx , 296 + nulpunty, 50/2);
+var programeerheaderc = paper.circle(237 + nulpuntx , 296 + nulpunty, 30/2);
+var programeerheader_hoek1 = paper.rect(237 + nulpuntx -(130/2), 296 + nulpunty + (90/2)-15, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1})  
+var programeerheader_hoek2 = paper.rect(237 + nulpuntx -(130/2), 296 + nulpunty + (90/2)-90, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var programeerheader_hoek3 = paper.rect(237  + nulpuntx -(130/2)+100, 296 + nulpunty - (90/2), 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var programeerheader_hoek4 = paper.rect(237 + nulpuntx -(130/2)+100, 296 + nulpunty - (90/2)+90-15, 30, 15).attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+programeerheader = paper.group(programeerheader_ , programeerheader_hoek1 , programeerheader_hoek2 , programeerheader_hoek3 ,programeerheader_hoek4 , programeerheadera , programeerheaderb , programeerheaderc );
+programeerheader.attr({fill: '#fff',stroke: '#000','stroke-width': 1}) 
+var label_prog_fw = paper.text(237+80+ nulpuntx, 305 + nulpunty, text_prog_fw).attr({ 'font-size': 25 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ (rotatie-90)+' )'}); 
+}
+
+
+//labels texten
+
+var label_groenefische = paper.text(450/2+ nulpuntx -0  , 115 + nulpunty, text_groenefische).attr({ 'font-size': 25, 'font-family':'arial'  ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+var label_groenefische2 = paper.text(450/2+ nulpuntx - 0 , 655 + nulpunty, text_groenefische).attr({ 'font-size': 25,'text-anchor':"middle", 'font-family':'arial'  , 'transform': 'rotate('+ rotatie+' )'}); 
+ if (groenemoduletype =="io" || groenemoduletype =="mcm"){
+ // 
+ var label_can1 = paper.text(80+ nulpuntx , 320 + nulpunty, text_can1).attr({ 'font-size': 25, 'font-family':'arial'  ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+var label_can2 = paper.text(80+ nulpuntx, 490 + nulpunty, text_can2).attr({ 'font-size': 25 , 'font-family':'arial' , 'text-anchor':"middle",'transform': 'rotate('+ rotatie+' )'}); 
+
+ }
+
+
+//var label_address = paper.text(255 + nulpuntx , 590 + nulpunty, "0x2B21").attr({'font-size': 25 , 'font-family':'arial' ,    'transform': 'rotate('+ rotatie+' )'}); 
+
+// var label_test = paper.text(nulpuntx+0 , nulpunty+0, "ergrege");
+ //label_test.attr({'font-size': 40 , 'text-anchor':"middle",  'text-align': 'center' , 'transform': 'rotate( 0  )'});
+//var q = label_test.clone();
+// q.attr({'font-size': 60 , 'text-anchor':"middle",  'text-align': 'center' , 'transform': 'rotate( 0  )'});
+//q.transform('translate('+ (308+ 0   + nulpuntx ) + ' ,'+ (40+0   + nulpunty ) + ' )') 
+
+
+
+
+
+ if (groenemoduletype =="io" || groenemoduletype =="mcm" ) {
+
+//DIPSWITCHES GENERERN
+var dipbreedte = 20
+var diphoogte = 20
+var diptussenruimte = 25.4
+var dipposx = 175
+var dipposy = 317
+var nr_een_on = paper.text(0-25 + dipposx + nulpuntx, 18 + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({'font-family':'arial', 'font-size': 18 , 'transform': 'rotate( 270 )'}); 
+
+//https://poopcode.com/create-dynamic-variable-names-inside-a-javascript-loop/
+for (var i = 0; i <= aantaldipswitches-1; i++) {
+//creer variabele namen met een forloop en vul direct de dipswitchstand in 
+   this["vdip"+ (aantaldipswitches -i) + "on"]   = paper.rect(dipposx+ nulpuntx, dipposy+ (diptussenruimte*(7 -i)) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+   this["vdip"+ (aantaldipswitches -i) + "off"]  = paper.rect(dipposx+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*(7 -i))+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+//het getal die rechts de dipadress aanduid
+ this["vdipgetal"+ (aantaldipswitches -i) ]  = paper.text(50+ dipposx + nulpuntx, 18 + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({ 'font-family':'arial', 'font-size': 25 ,'transform': 'rotate( 270 )'});
+
+console.log("loop" + i )
+console.log("canadreslengt-i= " + (canaddress.length - i) ) 
+ console.log("bit=" + canaddress.charAt(canaddress.length-1  - i) )
+ console.log("dipsw= " + (1+  i) ) 
+  console.log(" "   )
+
+//hier arceren we tijdens de loop de zwarte dipsettings
+if (canaddress.charAt(canaddress.length -1 - i) == "1") {
+ this["vdip"+ (aantaldipswitches -i) + "on"] .attr({ fill: gearceerd});
+} 
+
+if (canaddress.charAt(canaddress.length-1  - i) == "0") {
+ this["vdip"+ (aantaldipswitches -i) + "off"] .attr({ fill: gearceerd});
+} 
+
+}
+
+
+ 
+ 
+ if (modulerotatie == 0 ) {
+  //GROTE DIPSWITCHES GENERERN bovenaan 0gr dus
+//var schaalfactor =2 //schaalfactor grote dipswitchen
+
+var label_componentlabel = paper.text(450/2+ nulpuntx - 0  , -20 + nulpunty, text_componentlabel).attr({ 'font-size': 50 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+
+  dipbreedte = 20*schaalfactor
+  diphoogte = 20*schaalfactor
+  diptussenruimte = 25.4*schaalfactor
+  
+  dipposx = 180  
+  dipposy =   -nulpunty +0
+var nr_een_on = grotedip.text(0-25-(2*schaalfactor) + dipposx + nulpuntx , (18*schaalfactor) + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({ 'font-size': (18*schaalfactor) ,'font-family':'arial','text-anchor':"middle", 'transform': 'rotate( 270 )'}); 
+for (var i = 0; i <= aantaldipswitches-1; i++) {
+ this["vdip"+ (aantaldipswitches -i) + "on"]   = grotedip.rect(dipposx+ nulpuntx, dipposy+ (diptussenruimte*(7 -i)) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+   this["vdip"+ (aantaldipswitches -i) + "off"]  = grotedip.rect(dipposx+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*(7 -i))+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+ this["vdipgetal"+ (aantaldipswitches -i) ]  = grotedip.text((50*schaalfactor)+ dipposx + nulpuntx, (18*schaalfactor) + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({ 'font-family':'arial' ,  'font-size': (25*schaalfactor) ,'transform': 'rotate( 270 )'});
+if (canaddress.charAt(canaddress.length -1 - i) == "1") {
+ this["vdip"+ (aantaldipswitches -i) + "on"] .attr({ fill: gearceerd});
+} 
+if (canaddress.charAt(canaddress.length-1  - i) == "0") {
+ this["vdip"+ (aantaldipswitches -i) + "off"] .attr({ fill: gearceerd});
+} 
+}
+}
+
+
+ if (modulerotatie == 180  ) {
+  //GROTE DIPSWITCHES GENERERN onderaan 180 dus
+//var schaalfactor =2 //schaalfactor grote dipswitchen
+  dipbreedte = 20*schaalfactor
+  diphoogte = 20*schaalfactor
+  diptussenruimte = 25.4*schaalfactor
+  
+  dipposx = 180  
+  dipposy =   -nulpunty +1200
+var nr_een_on = grotedip.text(0-25-(2*schaalfactor) + dipposx + nulpuntx , (18*schaalfactor) + (diptussenruimte * 7) + dipposy + nulpunty -2 ,"ON").attr({ 'font-size': (18*schaalfactor) ,'font-family':'arial','text-anchor':"middle", 'transform': 'rotate( 270 )'}); 
+for (var i = 0; i <= aantaldipswitches-1; i++) {
+ this["vdip"+ (aantaldipswitches -i) + "on"]   = grotedip.rect(dipposx+ nulpuntx, dipposy+ (diptussenruimte*(7 -i)) + nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+   this["vdip"+ (aantaldipswitches -i) + "off"]  = grotedip.rect(dipposx+ dipbreedte+ nulpuntx, dipposy + (diptussenruimte*(7 -i))+nulpunty, dipbreedte, diphoogte).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
+ this["vdipgetal"+ (aantaldipswitches -i) ]  = grotedip.text((50*schaalfactor)+ dipposx + nulpuntx, (18*schaalfactor) + (diptussenruimte * (7 -i)) + dipposy + nulpunty ,(i+1)).attr({ 'font-family':'arial' ,  'font-size': (25*schaalfactor) ,'transform': 'rotate( 270 )'});
+if (canaddress.charAt(canaddress.length -1 - i) == "1") {
+ this["vdip"+ (aantaldipswitches -i) + "on"] .attr({ fill: gearceerd});
+} 
+if (canaddress.charAt(canaddress.length-1  - i) == "0") {
+ this["vdip"+ (aantaldipswitches -i) + "off"] .attr({ fill: gearceerd});
+} 
+}
+
+var label_componentlabel = paper.text(450/2+ nulpuntx - 0  , -20+840 + nulpunty, text_componentlabel).attr({ 'font-size': 50 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+
+//var kloon_label_componentlabel = label_componentlabel.clone();
+//kloon_label_componentlabel.transform('translate('+ (  0    ) + ' ,'+ ( 840 ) + ' )')  ; //verzet tov pos originele
+
+}
+
+}
+//dip1on.attr({ fill: gearceerd});
+// modulerotatie = 180
+
+
+ //grote dipswitsch verschuiven 
+ //grotedip.transform('translate(50 ,20 )') 
+//grotedip.transform('translate('+ (308+ 0   + nulpuntx ) + ' ,'+ (40+0   + nulpunty ) + ' )') 
+ 
+//tekeing roteren 
+//grotedip.attr({ 'transform': 'rotate( '+ (modulerotatie +15)  +' ,0,0 )'});
+
+
+
+
+
+
+
+
+
+if (groenemoduletype == "voed")
+{
+
+offset_centervhgatx = 450/2 //modulebreedte gedeeld door 2 is de midden vd module
+offset_centervhgaty = 360// hoe laag moet het op de gr mod staan?
+
+//buitenste gaatjesronde
+aantal = 24
+hoek = 360/aantal
+straal = 120
+gatdiam = 25
+for(let i = 0; i < aantal; i++) {
+ //var lijn  = paper.line(offset_centervhgatx+ nulpuntx, offset_centervhgaty + nulpunty, straal +offset_centervhgatx + nulpuntx, offset_centervhgaty + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+var gat = paper.circle(straal + nulpuntx +offset_centervhgatx, 0 + nulpunty +offset_centervhgaty, gatdiam/2);
+ //lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ (nulpuntx + offset_centervhgatx ) +','+ (nulpunty + offset_centervhgaty)  +' )'});
+ gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ (nulpuntx + offset_centervhgatx ) +','+ (nulpunty + offset_centervhgaty)  +' )'});
+ 
+}
+
+
+
+//middenste gaatjesronde
+aantal = 18
+hoek = 360/aantal
+straal = 85
+gatdiam = 25
+for(let i = 0; i < aantal; i++) {
+ //var lijn  = paper.line(offset_centervhgatx+ nulpuntx, offset_centervhgaty + nulpunty, straal +offset_centervhgatx + nulpuntx, offset_centervhgaty + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+var gat = paper.circle(straal + nulpuntx +offset_centervhgatx, 0 + nulpunty +offset_centervhgaty, gatdiam/2);
+ //lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ (nulpuntx + offset_centervhgatx ) +','+ (nulpunty + offset_centervhgaty)  +' )'});
+ gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ (nulpuntx + offset_centervhgatx ) +','+ (nulpunty + offset_centervhgaty)  +' )'});
+  
+}
+
+
+//middenste gaatjesronde
+aantal = 12
+hoek = 360/aantal
+straal = 53
+gatdiam = 25
+for(let i = 0; i < aantal; i++) {
+ //var lijn  = paper.line(offset_centervhgatx+ nulpuntx, offset_centervhgaty + nulpunty, straal +offset_centervhgatx + nulpuntx, offset_centervhgaty + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+var gat = paper.circle(straal + nulpuntx +offset_centervhgatx, 0 + nulpunty +offset_centervhgaty, gatdiam/2);
+ //lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ (nulpuntx + offset_centervhgatx ) +','+ (nulpunty + offset_centervhgaty)  +' )'});
+ gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ (nulpuntx + offset_centervhgatx ) +','+ (nulpunty + offset_centervhgaty)  +' )'});
+  
+}
+
+
+//kleinste gaatjesronde
+aantal = 5
+hoek = 360/aantal
+straal = 24
+gatdiam = 25
+for(let i = 0; i < aantal; i++) {
+ //var lijn  = paper.line(offset_centervhgatx+ nulpuntx, offset_centervhgaty + nulpunty, straal +offset_centervhgatx + nulpuntx, offset_centervhgaty + nulpunty).attr({ fill: '#000', stroke: '#f00', 'stroke-width': 1 })
+var gat = paper.circle(straal + nulpuntx +offset_centervhgatx, 0 + nulpunty +offset_centervhgaty, gatdiam/2);
+ //lijn.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ (nulpuntx + offset_centervhgatx ) +','+ (nulpunty + offset_centervhgaty)  +' )'});
+ gat.attr({ 'transform': 'rotate( '+ (hoek*i)  +','+ (nulpuntx + offset_centervhgatx ) +','+ (nulpunty + offset_centervhgaty)  +' )'});
+   
+}
+
+
+ if (modulerotatie == 180  ) {
+  
+var label_componentlabel = paper.text(450/2+ nulpuntx - 0  , -20+840 + nulpunty, text_componentlabel).attr({ 'font-size': 50 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+
+//var kloon_label_componentlabel = label_componentlabel.clone();
+//kloon_label_componentlabel.transform('translate('+ (  0    ) + ' ,'+ ( 840 ) + ' )')  ; //verzet tov pos originele
+
+}
+
+
+
+ if (modulerotatie == 0 ) {
+  //GROTE DIPSWITCHES GENERERN bovenaan 0gr dus
+//var schaalfactor =2 //schaalfactor grote dipswitchen
+
+var label_componentlabel = paper.text(450/2+ nulpuntx - 0  , -20 + nulpunty, text_componentlabel).attr({ 'font-size': 50 , 'font-family':'arial' ,'text-anchor':"middle", 'transform': 'rotate('+ rotatie+' )'}); 
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+paper.attr({ 'transform': 'rotate( '+ modulerotatie  +',0,0 )'});
+ 
+ 
+
+
+paper.drag() ; //met muis kan jet verzetten in de browser
+
+// create textbox met svgcode
+const input = document.createElement("textarea");
+input.setAttribute("id", "saveSVG");
+input.setAttribute("rows", "50");
+input.setAttribute("cols", "59");
+input.innerHTML = paper.toString();
+// insert textbox
+document.body.appendChild(input);
+
+
+
+
+
+//console.log(paper.toString())
+</script>
+
+
+ 
+
+
+ 
+</body>
+
+</html> 
+
+
+
+
+ 

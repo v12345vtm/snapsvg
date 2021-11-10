@@ -74,16 +74,7 @@ var gearceerd = paper.path("M15-5-10,18 M15,0,0").attr({ fill: "none", stroke: "
 //rotatie = document.getElementById('gui_rotation').value;
 //groenemoduletype = document.getElementById('gui_type').value;
 
- if (groenemoduletype == "io") {aantaldipswitches = 5}
 
-var groenebehuizing = paper.rect(0 + nulpuntx, 0 + nulpunty, 450, 750).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-var groenecanvas = paper.rect(10+ nulpuntx, 144 + nulpunty, 430, 462).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-
- if (groenemoduletype =="io" || groenemoduletype =="mcm"){
- //kadertjs canbus conenctoren
-var canbus1 = paper.rect(15+ nulpuntx, 233 + nulpunty, 135, 160).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-var canbus2 = paper.rect(15+ nulpuntx, 233+160+10 + nulpunty, 135, 160).attr({ fill: '#fff', stroke: '#000', 'stroke-width': 1 })
-}
 
 
 var groenefischeboven = paper.rect(10 + nulpuntx, 0 + nulpunty, 430, 127).attr({fill: '#fff',stroke: '#000','stroke-width': 1})
@@ -91,40 +82,7 @@ var groenefischeonder = paper.rect(10 + nulpuntx, 623 + nulpunty, 430, 127).attr
 
  
  
- if (groenemoduletype =="io" || groenemoduletype =="mcm"){
- // canbus rj10 omtrek
-bb =  20 //insprong weerhaak links*
-cc = 80 //plughoogte*
-dd = cc+30//weerhaak hoe diep is de uitspariing naar onder toe
-ee =  85 //breedte weerhaak
-ff =  ee+bb  
- var canconnector1 = paper.polyline([
-0,0
-,0,cc
-,bb,cc   
-,bb,dd  
-,ee,dd   
-,ee,cc
-,ff,cc
-,ff,0
-,0,0
- ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
-canconnector1.transform('translate('+ (30   + nulpuntx ) + ' ,'+ (260   + nulpunty ) + ' )') 
 
- var canconnector2 = paper.polyline([
-0,0
-,0,cc
-,bb,cc   
-,bb,dd  
-,ee,dd   
-,ee,cc
-,ff,cc
-,ff,0
-,0,0
- ]).attr({  stroke: "black", fill: "none"  ,'stroke-width': 1});
-canconnector2.transform('translate('+ (30   + nulpuntx ) + ' ,'+ (430   + nulpunty ) + ' )') 
-
-}
 
 if (true) {
 var nr_een = paper.text(395+7 + nulpuntx, 43 + nulpunty, "1").attr({'text-anchor':"middle" , 'transform': 'rotate('+ rotatie+' )'}); 
